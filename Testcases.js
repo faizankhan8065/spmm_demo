@@ -5,6 +5,7 @@ test('test', async ({ page }) => {
   await page.locator('#file1').click();
   await page.locator('#file1').setInputFiles('cdifferent copy.cpp');
   await page.locator('#file2').click();
+  await expect(page.getByText('cdifferent copy.cpp')).toBeVisible();
   await page.locator('#file2').setInputFiles('calculator copy.cpp');
   await page.getByRole('button', { name: 'Compare Files' }).click();
   await page.getByText('cdifferent copy.cpp /* Name: CALCULATOR v1.0 Author: Aldo Ziflaj Date: 01-01-13 ').click();
@@ -23,6 +24,7 @@ test('test', async ({ page }) => {
   const downloadPromise = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Download Report' }).click();
   const download = await downloadPromise;
+  await expect(downloadButton).toBeVisible();
   await page.getByRole('cell', { name: '/*' }).first().click();
   await page.getByRole('cell', { name: '/*' }).nth(1).click();
   await page.getByRole('cell', { name: 'Name: CALCULATOR v1.0' }).first().click();
